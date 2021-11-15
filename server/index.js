@@ -58,6 +58,7 @@ fastify.addHook("preHandler", (request, _reply, done) => {
 // En otro caso, devuelve un 401
 const checkAuthentication = (request, reply, done) => {
   if (request.token == null) {
+    console.log(request.token)
     reply.code(401).send({
       error: "El token no está presente en la petición",
     });
