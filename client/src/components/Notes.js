@@ -27,7 +27,8 @@ const ListNotes = () => {
       {listItems.map((data, i) => (
         <main>
           <div id="note">
-            <NavLink key={data.id} to={link + i}>Editar</NavLink>
+          <NavLink key={data.id} to={link + i}>Editar</NavLink>
+          
             <p key={data.title} id="title">
               {data.title}{" "}
             </p>
@@ -67,9 +68,7 @@ const EditNotes = () => {
     fetch("/api/notes/" + JSON.parse(localStorage.data)[id].id, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        setData(data);
-        localStorage.setItem("user", data.username);
-        localStorage.setItem("token", data.token);
+
       });
   };
 
@@ -111,9 +110,8 @@ const NewNote = () => {
     fetch("/api/notes", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        localStorage.setItem("user", data.username);
-        localStorage.setItem("token", data.token);
-
+        
+window.location('./notes')
       });
   };
   
