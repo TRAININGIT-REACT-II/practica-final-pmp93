@@ -1,0 +1,11 @@
+#title{
+    font-size: 1.2em;
+}
+#contentNote{
+    font-size: 0.9em;
+}
+#note{
+    border: 1px solid black;
+    width: 20%;
+    float: left;
+}

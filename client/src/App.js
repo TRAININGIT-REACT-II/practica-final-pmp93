@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Status from "./components/Status";
+import { Routes, Route, Link } from "react-router-dom";
+import Login from "./components/Login";
+import {EditNotes,ListNotes, NewNote } from "./components/Notes";
 
 // Componente principal de la aplicación.
 const App = () => {
-  const [status, setStatus] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  // Cargamos el estado del servidor
-  useEffect(() => {
-    fetch("/api")
-      .then((res) => res.json())
-      .then((data) => setStatus(data.status === "ok"))
-      .finally(() => setLoading(false));
-  }, []);
-
   // Mostramos la aplicación
   return (
     <main>
-      <h1>Curso de React de TrainingIT</h1>
-      <p>
-        Estado del servidor:
-        {loading ? " Cargando..." : <Status status={status} />}
-      </p>
+
+      <p>Notas de {localStorage.user}</p> 
+      <Routes>
+        <Route path="/status" element={<Status />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/notes" element={<ListNotes />} />
+        <Route path="/notes/edit/:id" element={<EditNotes />} />
+        <Route path="/notes/new" element={<NewNote />} />
+      </Routes>
     </main>
   );
 };
