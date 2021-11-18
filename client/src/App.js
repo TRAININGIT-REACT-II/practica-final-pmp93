@@ -17,7 +17,7 @@ const App = () => {
     
   } 
   if (logged) {
-    setInterval(() => {
+    // setInterval(() => {
       const POSTOptions = {
         method: "GET",
         headers: {
@@ -31,7 +31,7 @@ const App = () => {
                     localStorage.setItem("data", JSON.stringify(data))
       
                   });
-    }, 1000);
+    // }, 1000);
     
   }
   // Mostramos la aplicación
@@ -46,7 +46,6 @@ const App = () => {
       <Route path="/" element={logged ? <ListNotes/>:<Login/>
       } />
       <Route path="/status" element={<Status />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/edit/:id" element={<EditNotes />} />
         <Route path="/new" element={<NewNote />} />
       </Routes>

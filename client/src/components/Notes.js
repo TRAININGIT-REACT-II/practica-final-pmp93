@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { useParams } from "react-router";
+import ReactDOM from 'react-dom'
+
 
 import "./../styles/Notes.css";
 let listItems;
@@ -13,38 +15,52 @@ const POSTOptions = {
   },
 };
 const ListNotes = () => {
+  function openEditor(i){
+    let link = "/edit/";
+    console.log(i);
+    window.location = link + i
+  }
   fetch("/api/notes", POSTOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      localStorage.setItem("data", JSON.stringify(data));
-      if (listItems) {
-        console.log(listItems);
-      }else{
-        window.location =""
-      }
-    });
+  .then((response) => response.json())
+  .then((data) => {
+    listItems = data;
+    console.log("items",listItems);
+    if (listItems) {
+      console.log("cargadoo");
+    }else{
+      window.location = ''
+    }
+    localStorage.setItem("data", JSON.stringify(data));
+    console.log(listItems);
+      let layoutNotes = (
+        <>{listItems.map((data, i) => (
+          <main key={Math.random()} >
 
-  listItems = JSON.parse(localStorage.data);
+              <div id="note">
+                <button key={Math.random() + data.id} onClick={() => openEditor(i)}>Editar</button>
 
-  let link = "/notes/edit/";
-  return (
-    <div className="container">
-      {listItems.map((data, i) => (
-        <main key={Math.random()} >
+                <p key={Math.random() + data.title} id="title">
+                  {data.title}
+                </p>
+                <p key={Math.random() + data.content} id="contentNote">
+                  {data.content}
+                </p>
+              </div>
+            </main>
+          ))}</>
+          )
+          ReactDOM.render(layoutNotes, document.getElementById('Notascontainer'));
           
-          <div  id="note">
-          <NavLink key={Math.random()+data.id} to={link + i}>Editar</NavLink>
           
-            <p key={Math.random()+data.title} id="title">
-              {data.title}
-            </p>
-            <p key={Math.random()+data.content} id="contentNote">
-              {data.content}
-            </p>
-          </div>
-        </main>
-      ))}
-    </div>
+        });
+        
+        // listItems = JSON.parse(localStorage.data);
+        
+        return (
+          <div className="container" >
+            <div id="Notascontainer"></div>
+      </div>
+    
   );
 };
 // export default ListNotes;
@@ -75,24 +91,24 @@ const EditNotes = () => {
       .then((response) => response.json())
       .then((data) => {
         fetch("/api/notes", POSTOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          localStorage.setItem("data", JSON.stringify(data));
-          window.location= '/notes'
-    
-        });
+          .then((response) => response.json())
+          .then((data) => {
+            localStorage.setItem("data", JSON.stringify(data));
+            window.location = "/";
+
+          });
       });
-      
+
   };
 
   return (
     <div className="col-6">
       <form onSubmit={onSubmit}>
         <label>Titulo</label>
-        <input ref={tituloRef} id="titulo" type="text" name="titulo" defaultValue={JSON.parse(localStorage.data)[id].title}/>
+        <input ref={tituloRef} id="titulo" type="text" name="titulo" defaultValue={JSON.parse(localStorage.data)[id].title} />
         <br />
         <label>Contenido</label>
-        <textarea ref={contenidoRef} id="contenido" type="text" name="contenido" defaultValue={JSON.parse(localStorage.data)[id].title}></textarea>
+        <textarea ref={contenidoRef} id="contenido" type="text" name="contenido" defaultValue={JSON.parse(localStorage.data)[id].content}></textarea>
         <br />
         <input type="submit" value="Guardar"></input>
       </form>
@@ -102,8 +118,8 @@ const EditNotes = () => {
 
 const NewNote = () => {
 
-  const tituloRef = useRef(null);
-  const contenidoRef = useRef(null);
+  const tituloRef = useRef('');
+  const contenidoRef = useRef('');
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -123,17 +139,18 @@ const NewNote = () => {
     fetch("/api/notes", requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        
+
         fetch("/api/notes", POSTOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          localStorage.setItem("data", JSON.stringify(data));
-          window.location= '/notes'
-    
-        });      });
-      
+          .then((response) => response.json())
+          .then((data) => {
+            localStorage.setItem("data", JSON.stringify(data));
+            window.location = "/";
+
+          });
+      });
+
   };
-  
+
 
   return (
     <div className="col-6">
