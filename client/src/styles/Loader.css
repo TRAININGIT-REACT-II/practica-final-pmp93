@@ -1,0 +1,32 @@
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  margin: 1rem 0;
+}
+
+.loader-animation {
+  animation: loaderSpin 2s ease-in-out infinite;
+  border: 8px solid var(--mini-color-element-background);
+  border-top: 8px solid var(--mini-color-primary);
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+}
+
+.loader-text {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@keyframes loaderSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

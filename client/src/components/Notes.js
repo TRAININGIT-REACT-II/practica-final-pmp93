@@ -17,6 +17,7 @@ const ListNotes = () => {
     .then((response) => response.json())
     .then((data) => {
       localStorage.setItem("data", JSON.stringify(data));
+
     });
 
   listItems = JSON.parse(localStorage.data);
@@ -25,14 +26,15 @@ const ListNotes = () => {
   return (
     <div className="container">
       {listItems.map((data, i) => (
-        <main>
-          <div id="note">
-          <NavLink key={data.id} to={link + i}>Editar</NavLink>
+        <main key={Math.random()} >
           
-            <p key={data.title} id="title">
-              {data.title}{" "}
+          <div  id="note">
+          <NavLink key={Math.random()+data.id} to={link + i}>Editar</NavLink>
+          
+            <p key={Math.random()+data.title} id="title">
+              {data.title}
             </p>
-            <p key={data.content} id="contentNote">
+            <p key={Math.random()+data.content} id="contentNote">
               {data.content}
             </p>
           </div>
@@ -68,8 +70,15 @@ const EditNotes = () => {
     fetch("/api/notes/" + JSON.parse(localStorage.data)[id].id, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-
+        fetch("/api/notes", POSTOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("data", JSON.stringify(data));
+          window.location= '/notes'
+    
+        });
       });
+      
   };
 
   return (
@@ -111,8 +120,14 @@ const NewNote = () => {
       .then((response) => response.json())
       .then((data) => {
         
-window.location('./notes')
-      });
+        fetch("/api/notes", POSTOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          localStorage.setItem("data", JSON.stringify(data));
+          window.location= '/notes'
+    
+        });      });
+      
   };
   
 

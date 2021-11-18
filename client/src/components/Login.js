@@ -32,6 +32,7 @@ console.log();
           localStorage.setItem('user', data.username)
           localStorage.setItem('token', data.token)
           localStorage.setItem('id_user', data.id)
+          
         } );
   
       }
