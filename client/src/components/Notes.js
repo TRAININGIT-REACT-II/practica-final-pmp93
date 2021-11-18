@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { useParams } from "react-router";
 
 import "./../styles/Notes.css";
-let listItems = [];
+let listItems;
 
 const POSTOptions = {
   method: "GET",
@@ -17,7 +17,11 @@ const ListNotes = () => {
     .then((response) => response.json())
     .then((data) => {
       localStorage.setItem("data", JSON.stringify(data));
-
+      if (listItems) {
+        console.log(listItems);
+      }else{
+        window.location =""
+      }
     });
 
   listItems = JSON.parse(localStorage.data);
