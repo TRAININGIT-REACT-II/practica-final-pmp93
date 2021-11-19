@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Status from "./components/Status";
 import { Routes, Route, Link,Redirect , NavLink} from "react-router-dom";
 import Login from "./components/Login";
+import { Register } from "./components/Register";
 import {EditNotes,ListNotes, NewNote } from "./components/Notes";
 import "./styles/Login.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -62,6 +63,8 @@ const App = () => {
                 <Route path="/status" element={<Status />} />
                 <Route path="/edit/:id" element={<EditNotes />} />
                 <Route path="/new" element={<NewNote />} />
+                <Route path="/register" element={logged ? '':<Register/>} />
+                
               </Routes>
             </div>
       </Col>
