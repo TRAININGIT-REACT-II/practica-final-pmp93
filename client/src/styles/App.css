@@ -1,0 +1,20 @@
+.back{
+    float: left;
+}
+.logOut{
+    float: right;
+}
+.AppContainer{
+    padding:40px;
+    padding-left: 5% !important;   
+    border-radius: 5px;
+    padding-right: 5% !important;   }
+body{
+    background-color: rgba(220, 220, 220, 0.548);
+}
+.cuerpo{
+    margin-top: 10px !important;
+}
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

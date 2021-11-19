@@ -4,6 +4,11 @@ import { Routes, Route, Link,Redirect , NavLink} from "react-router-dom";
 import Login from "./components/Login";
 import {EditNotes,ListNotes, NewNote } from "./components/Notes";
 import "./styles/Login.css"
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./styles/App.css";
+import { Button,Col,Row } from 'reactstrap';
+
+
 
 
 // Componente principal de la aplicación.
@@ -16,6 +21,14 @@ const App = () => {
     window.location = "/";
     
   } 
+  const BackPage = () => {
+    
+    window.location = "/";
+    
+  } 
+  function newNote(){
+    window.location = 'new'
+  }
   if (logged) {
     // setInterval(() => {
       const POSTOptions = {
@@ -37,18 +50,24 @@ const App = () => {
   // Mostramos la aplicación
   return (
     <main>
+      <Row id="">
 
-      {logged?<button onClick={logOut}>Cerrar Sesion</button>:""}
-      <p key="principal">Notas de {localStorage.user}</p> 
-      <Routes>
-
-
-      <Route path="/" element={logged ? <ListNotes/>:<Login/>
-      } />
-      <Route path="/status" element={<Status />} />
-        <Route path="/edit/:id" element={<EditNotes />} />
-        <Route path="/new" element={<NewNote />} />
-      </Routes>
+        <Col  sm="1" className=" columnas " ></Col>
+        <Col  sm="10" className="   columnas" >
+            {logged?window.location.pathname == '/' ?<Button className="newNote" onClick={() => newNote()}>Nuevo</Button>:<Button className="back" onClick={BackPage}>Volver</Button>:""}
+            {logged?<Button className="logOut" onClick={logOut}>Cerrar Sesion</Button>:""}
+            <div className="cuerpo">
+              <Routes >
+                <Route path="/" element={logged ? <ListNotes/>:<Login/>} />
+                <Route path="/status" element={<Status />} />
+                <Route path="/edit/:id" element={<EditNotes />} />
+                <Route path="/new" element={<NewNote />} />
+              </Routes>
+            </div>
+      </Col>
+      <Col  sm="1" className="   columnas" >
+      </Col>
+    </Row>
     </main>
   );
 };

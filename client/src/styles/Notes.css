@@ -9,3 +9,44 @@
     width: 20%;
     float: left;
 }
+textarea{
+    border-radius: 10px;
+}
+/* .input{
+    border-radius: 10px;
+} */
+
+#guardar{
+    width: 25%;
+    float: left;
+}
+#volver{
+    float: right;
+    width: 25%;
+}
+#titulo{
+    width: 100%;
+    border-radius: 4px;
+    border:1px solid #dcdcdc;
+    height: 40px;
+}
+#contenido{
+    width: 100%;
+    border-radius: 4px;
+    border:1px solid #dcdcdc;
+}
+.boton-edit{
+    float: left;
+
+}
+.boton-delete{
+    float: right;
+}
+#FormNote{
+    width: 100%;
+   }
+.FormNoteContainer{
+    padding:40px;
+    padding-left: 5% !important;   
+    border-radius: 5px;
+    padding-right: 5% !important;   }

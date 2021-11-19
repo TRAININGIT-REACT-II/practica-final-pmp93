@@ -1,7 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import { useParams } from "react-router";
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
+import { Button,Card,CardBody, CardTitle,CardGroup,CardText,Col,Row,Input } from 'reactstrap';
+import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
+
+
 
 
 import "./../styles/Notes.css";
@@ -14,47 +18,70 @@ const POSTOptions = {
     "api-token": localStorage.token,
   },
 };
+const DeleteOptions = {
+  method: "DELETE",
+  headers: {
+    "Content-Type": "application/json",
+    "api-token": localStorage.token,
+  },
+  body: JSON.stringify({
+    
+  })
+};
 const ListNotes = () => {
   function openEditor(i){
     let link = "/edit/";
-    console.log(i);
     window.location = link + i
   }
+  function deleteNote(id){
+    fetch("/api/notes/" + id, DeleteOptions)
+  .then((response) => response.json())
+  .then((data) => {
+    window.location = ''
+
+  });
+  }
+ 
   fetch("/api/notes", POSTOptions)
   .then((response) => response.json())
   .then((data) => {
     listItems = data;
     console.log("items",listItems);
-    if (listItems) {
-      console.log("cargadoo");
-    }else{
-      window.location = ''
-    }
+    listItems ? " " :  window.location = ''
+    
     localStorage.setItem("data", JSON.stringify(data));
     console.log(listItems);
       let layoutNotes = (
-        <>{listItems.map((data, i) => (
-          <main key={Math.random()} >
+        <>
+        <ResponsiveMasonry columnsCountBreakPoints={{350: 1, 750: 2, 900: 3, 1200:4}} >
 
-              <div id="note">
-                <button key={Math.random() + data.id} onClick={() => openEditor(i)}>Editar</button>
+        <Masonry >
+        {listItems.map((data, i) => (
+          <CardGroup>
+          <Card color="secondary" outline  key={Math.random() + data.id}   >
+            <CardBody  key={Math.random() + data.id} >
+              <CardTitle key={Math.random() + data.title} tag="h5"> {data.title} </CardTitle>
+              {console.log(data.content)}
+                  <div>{data.content}</div>
+              {/* </CardText> */}
+              <Button className="boton-edit" size="sm" color="secondary" key={Math.random() + data.id} onClick={() => openEditor(i)}>Editar</Button>
+              <Button className="boton-delete" size="sm" color="danger" key={Math.random() + data.id} onClick={() => deleteNote(data.id)}>Borrar</Button>
 
-                <p key={Math.random() + data.title} id="title">
-                  {data.title}
-                </p>
-                <p key={Math.random() + data.content} id="contentNote">
-                  {data.content}
-                </p>
-              </div>
-            </main>
-          ))}</>
+            </CardBody>
+            
+          </Card>
+
+          </CardGroup>
+          ))}
+          </Masonry>
+  </ResponsiveMasonry>
+          </>
           )
           ReactDOM.render(layoutNotes, document.getElementById('Notascontainer'));
           
           
         });
         
-        // listItems = JSON.parse(localStorage.data);
         
         return (
           <div className="container" >
@@ -73,7 +100,7 @@ const EditNotes = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    //    console.log(Object.values(dataUser));
+       console.log(tituloRef);
 
     console.log();
     const requestOptions = {
@@ -102,16 +129,25 @@ const EditNotes = () => {
   };
 
   return (
-    <div className="col-6">
+    <div className="editor"><Row id="FormNote">
+    <Col  sm="4" >    </Col>
+    <Col  sm="4" className="bg-light border FormNoteContainer" >
       <form onSubmit={onSubmit}>
-        <label>Titulo</label>
+        <h4>Titulo</h4>
         <input ref={tituloRef} id="titulo" type="text" name="titulo" defaultValue={JSON.parse(localStorage.data)[id].title} />
         <br />
-        <label>Contenido</label>
-        <textarea ref={contenidoRef} id="contenido" type="text" name="contenido" defaultValue={JSON.parse(localStorage.data)[id].content}></textarea>
+        <h4>Contenido</h4>
+        <textarea ref={contenidoRef} id="contenido" type="text" name="contenido" defaultValue={JSON.parse(localStorage.data)[id].content} rows="4" cols="45"></textarea>
         <br />
-        <input type="submit" value="Guardar"></input>
+        {/* <Input id="contenido" name="contenido" type="textarea" ref={contenidoRef} value={JSON.parse(localStorage.data)[id].content} />     */}
+        <Input type="submit" value="Guardar" id="guardar"></Input><Button id="volver">Volver</Button>
       </form>
+      </Col>
+      
+      <Col  sm="4" >    </Col>
+
+      </Row>
+      
     </div>
   );
 };
@@ -153,16 +189,24 @@ const NewNote = () => {
 
 
   return (
-    <div className="col-6">
-      <form onSubmit={onSubmit}>
-        <label>Titulo</label>
-        <input ref={tituloRef} id="titulo" type="text" name="titulo" />
+    <div className="editor">
+      <Row id="FormNote">
+            <Col  sm="4" >    </Col>
+            <Col  sm="4" className="bg-light border FormNoteContainer" ><form onSubmit={onSubmit}>
+      <h4>Titulo</h4>
+        <input ref={tituloRef} id="titulo" type="text" name="titulo"  />
         <br />
-        <label>Contenido</label>
-        <textarea ref={contenidoRef} id="contenido" type="text" name="contenido" ></textarea>
+        <h4>Contenido</h4>
+        <textarea ref={contenidoRef} id="contenido" type="text" name="contenido"  rows="4" cols="50"></textarea>
         <br />
-        <input type="submit" value="Guardar"></input>
+        {/* <Input id="contenido" name="contenido" type="textarea" ref={contenidoRef} value={JSON.parse(localStorage.data)[id].content} />     */}
+        <Button block>Guardar</Button>
       </form>
+      </Col>
+      
+      <Col  sm="4" >    </Col>
+
+      </Row>
     </div>
   );
 };
