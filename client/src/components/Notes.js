@@ -127,6 +127,11 @@ const EditNotes = () => {
       });
 
   };
+  function back(){
+    window.location = '/'
+
+  
+  }
 
   return (
     <div className="editor"><Row id="FormNote">
@@ -140,7 +145,8 @@ const EditNotes = () => {
         <textarea ref={contenidoRef} id="contenido" type="text" name="contenido" defaultValue={JSON.parse(localStorage.data)[id].content} rows="4" cols="45"></textarea>
         <br />
         {/* <Input id="contenido" name="contenido" type="textarea" ref={contenidoRef} value={JSON.parse(localStorage.data)[id].content} />     */}
-        <Input type="submit" value="Guardar" id="guardar"></Input><Button id="volver">Volver</Button>
+        <Input type="submit" value="Guardar" id="guardar"></Input>
+        <Button id="volver" onClick={() => back()}>Volver</Button>
       </form>
       </Col>
       
@@ -186,6 +192,7 @@ const NewNote = () => {
       });
 
   };
+  
 
 
   return (

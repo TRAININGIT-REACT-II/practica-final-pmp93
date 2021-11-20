@@ -47,6 +47,9 @@ const loading =(<Loader type="ThreeDots" color="#000" secondaryColor="#dcdcdc"  
         }, 2000);
       });
   };
+  function register(){
+    window.location = '/register'
+  }
 
   return (
     <div className="row">
@@ -54,16 +57,21 @@ const loading =(<Loader type="ThreeDots" color="#000" secondaryColor="#dcdcdc"  
             <Col  sm="4" >    </Col>
             <Col  sm="4" className="bg-light border LoginContainer" >
               <form onSubmit={onSubmit}>
-              <h4 >Nombre</h4>
+              <h3>Iniciar Sesión</h3>
+
+              <Label >Nombre</Label>
                 <input ref={usernameRef} id="name" type="text" name="username" />
-              <h4 >Contraseña</h4>
+              <Label >Contraseña</Label>
                 <input ref={passwordRef} id="password" type="password" name="password" />
                 <br/>
                 <br/>
 
-                <Button type="submit" block id="loading">Mandar preferencias</Button>
+                <Button type="submit" block id="loading">Iniciar Sesión</Button>
 
               </form>
+              <br/>
+              <Button  block id="loading" onClick={()=> register()}>Register</Button>
+
               {/* <div id="loading"></div> */}
 
             </Col>

@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Status from "./components/Status";
 import { Routes, Route, Link,Redirect , NavLink} from "react-router-dom";
 import Login from "./components/Login";
-import { Register } from "./components/Register";
+import RegisterUser from "./components/Register";
 import {EditNotes,ListNotes, NewNote } from "./components/Notes";
 import "./styles/Login.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -51,10 +51,11 @@ const App = () => {
   // Mostramos la aplicación
   return (
     <main>
+      <div id="alert"></div>
       <Row id="">
 
-        <Col  sm="1" className=" columnas " ></Col>
-        <Col  sm="10" className="   columnas" >
+        <Col  sm="1" className="columnas " ></Col>
+        <Col  sm="10" className="columnas" >
             {logged?window.location.pathname == '/' ?<Button className="newNote" onClick={() => newNote()}>Nuevo</Button>:<Button className="back" onClick={BackPage}>Volver</Button>:""}
             {logged?<Button className="logOut" onClick={logOut}>Cerrar Sesion</Button>:""}
             <div className="cuerpo">
@@ -63,7 +64,7 @@ const App = () => {
                 <Route path="/status" element={<Status />} />
                 <Route path="/edit/:id" element={<EditNotes />} />
                 <Route path="/new" element={<NewNote />} />
-                <Route path="/register" element={logged ? '':<Register/>} />
+                <Route path="/register" element={logged ? "":<RegisterUser/>} />
                 
               </Routes>
             </div>
